@@ -22,7 +22,7 @@ final class Day2: Day {
     }
     
     func run(input: String) -> String {
-        var matchingGames: [Int] = []
+        var powers: [Int] = []
         for line in input.lines {
             let matches = line.matches(of: regex).map { $0.output }
             
@@ -43,11 +43,9 @@ final class Day2: Day {
                 }
             }
             
-            if red <= 12 && green <= 13 && blue <= 14 {
-                matchingGames.append(line.allDigits[0])
-            }
+            powers.append(red * green * blue)
         }
         
-        return matchingGames.sum.description
+        return powers.sum.description
     }
 }

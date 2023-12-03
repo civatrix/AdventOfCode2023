@@ -47,14 +47,18 @@ final class Day3: Day {
             }
         }
         
-        return parts
-            .filter { part in
-                part.adjacent.contains { point in
-                    let value = point.value(in: characters)
-                    return value != nil && value != "."
-                }
+        let possibleGears = parts.filter { $0.adjacent.contains { $0.value(in: characters) == "*" } }
+        var gearPairs = Set<Set<Int>>()
+        for part in possibleGears {
+            let gearPosition = part.adjacent.first { $0.value(in: characters) == "*" }!
+            let matchingGear = possibleGears.first { $0.id != part.id && $0.adjacent.contains(gearPosition) }
+            if let matchingGear {
+                gearPairs.insert([part.id, matchingGear.id])
             }
-            .map { $0.id }
+        }
+        
+        return gearPairs
+            .map { $0.reduce(1, *) }
             .sum
             .description
     }

@@ -24,6 +24,6 @@ final class Day3Tests: XCTestCase {
 ...$.*....
 .664.598..
 """
-        XCTAssertEqual(day.run(input: input), "4361")
+        XCTAssertEqual(day.run(input: input), "467835")
     }
 }

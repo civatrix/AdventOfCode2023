@@ -9,20 +9,20 @@ import Foundation
 
 final class Day4: Day {
     func run(input: String) -> String {
-        let numbers = input.lines.map { $0.split(separator: ":")[1].split(separator: "|") }
+        let numberOfWins = input
+            .lines
+            .map { $0.split(separator: ":")[1].split(separator: "|") }
+            .map { (Set($0[0].allDigits), Set($0[1].allDigits)) }
+            .map { $0.0.intersection($0.1).count }
         
-        return numbers.map {
-            let lhs = Set($0[0].allDigits)
-            let rhs = Set($0[1].allDigits)
-            
-            let matches = lhs.intersection(rhs).count
-            if matches > 0 {
-                return 1 << (lhs.intersection(rhs).count - 1)
-            } else {
-                return 0
+        var numberOfCards = [Int](repeating: 1, count: numberOfWins.count)
+        for (index, wins) in numberOfWins.enumerated() {
+            guard wins > 0 else { continue }
+            for j in (index + 1 ... index + wins) {
+                numberOfCards[j] += numberOfCards[index]
             }
         }
-        .sum
-        .description
+        
+        return numberOfCards.sum.description
     }
 }

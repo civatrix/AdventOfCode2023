@@ -47,6 +47,6 @@ humidity-to-location map:
 60 56 37
 56 93 4
 """
-        XCTAssertEqual(day.run(input: input), "35")
+        XCTAssertEqual(day.run(input: input), "46")
     }
 }

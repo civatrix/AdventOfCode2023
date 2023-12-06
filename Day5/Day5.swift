@@ -36,7 +36,7 @@ final class Day5: Day {
     func run(input: String) -> String {
         let lines = input.lines
         
-        let seeds = Set<Int>(lines[0].allDigits)
+        let seedRanges = [Range<Int>](lines[0].allDigits.chunks(ofCount: 2).map { $0[n: 0] ..< $0[n: 0] + $0[n: 1] })
         var maps = [String: Map]()
         var currentMap: Map?
         
@@ -59,22 +59,40 @@ final class Day5: Day {
             maps[currentMap.from] = currentMap
         }
         
-        var bestLocation = Int.max
-        for seed in seeds {
-            var current = "seed"
-            var value = seed
-            while true {
-                let map = maps[current]!
-                current = map.to
-                value = map.destination(for: value)
-                
-                if current == "location" {
-                    bestLocation = min(bestLocation, value)
-                    break
-                }
-            }
+        return test(seedRanges: seedRanges, maps: maps).description
+    }
+    
+    var locations = [Int]()
+    let queue = OperationQueue()
+    func test(seedRanges: [Range<Int>], maps: [String: Map]) -> Int {
+        for seedRange in seedRanges {
+            bestSeed(from: seedRange, maps: maps)
         }
         
-        return bestLocation.description
+        queue.waitUntilAllOperationsAreFinished()
+        
+        return locations.min()!
+    }
+    
+    func bestSeed(from seeds: Range<Int>, maps: [String: Map]) {
+        queue.addOperation {
+            var bestLocation = Int.max
+            for seed in seeds {
+                var current = "seed"
+                var value = seed
+                while true {
+                    let map = maps[current]!
+                    current = map.to
+                    value = map.destination(for: value)
+                    
+                    if current == "location" {
+                        bestLocation = min(bestLocation, value)
+                        break
+                    }
+                }
+            }
+            
+            self.locations.append(bestLocation)
+        }
     }
 }

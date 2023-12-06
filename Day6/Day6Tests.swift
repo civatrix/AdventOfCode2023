@@ -16,6 +16,6 @@ final class Day6Tests: XCTestCase {
 Time:      7  15   30
 Distance:  9  40  200
 """
-        XCTAssertEqual(day.run(input: input), "288")
+        XCTAssertEqual(day.run(input: input), "71503")
     }
 }

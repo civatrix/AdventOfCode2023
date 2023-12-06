@@ -9,16 +9,11 @@ import Foundation
 
 final class Day6: Day {
     func run(input: String) -> String {
-        let times = input.lines[0].allDigits
-        let distances = input.lines[1].allDigits
+        let time = input.lines[0].replacingOccurrences(of: " ", with: "").allDigits[0]
+        let distance = input.lines[1].replacingOccurrences(of: " ", with: "").allDigits[0]
         
-        var result = 1
-        for (time, distance) in zip(times,distances) {
-            let solutions = solveQuadratic(a: 1, b: -time, c: distance)
-            result *= solutions.1 - solutions.0 + 1
-        }
-        
-        return result.description
+        let solutions = solveQuadratic(a: 1, b: -time, c: distance)
+        return (solutions.1 - solutions.0 + 1).description
     }
     
     func solveQuadratic(a: Int, b: Int, c: Int) -> (Int, Int) {

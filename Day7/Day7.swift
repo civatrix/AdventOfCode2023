@@ -9,7 +9,7 @@ import Foundation
 
 final class Day7: Day {
     struct CamelHand: Comparable {
-        static let cardOrder: [Character] = ["A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2"]
+        static let cardOrder: [Character] = ["A", "K", "Q", "T", "9", "8", "7", "6", "5", "4", "3", "2", "J"]
         static let handOrder = [
             [5], // 5 of a kind
             [1,4], // 4 of a kind
@@ -42,7 +42,16 @@ final class Day7: Day {
             cards = line.split(separator: " ")[0]
             bid = Int(line.split(separator: " ")[1])!
             
-            let occurrences = cards.reduce(into: [Character: Int]()) { $0[$1, default: 0] += 1 }.values.sorted()
+            if cards == "JJJJJ" {
+                rank = Self.handOrder.startIndex
+                return
+            }
+            
+            var cardCounts = cards.reduce(into: [Character: Int]()) { $0[$1, default: 0] += 1 }
+            let jokers = cardCounts["J", default: 0]
+            cardCounts.removeValue(forKey: "J")
+            var occurrences = cardCounts.values.sorted()
+            occurrences[occurrences.endIndex - 1] += jokers
             rank = Self.handOrder.firstIndex(of: occurrences)!
         }
     }

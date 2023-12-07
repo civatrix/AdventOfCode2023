@@ -19,6 +19,6 @@ KK677 28
 KTJJT 220
 QQQJA 483
 """
-        XCTAssertEqual(day.run(input: input), "6440")
+        XCTAssertEqual(day.run(input: input), "5905")
     }
 }

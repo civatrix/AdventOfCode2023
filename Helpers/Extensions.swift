@@ -40,6 +40,10 @@ extension Collection where Element == Int {
     var sum: Int {
         self.reduce(0, +)
     }
+    
+    var leastCommonMultiple: Int {
+        reduce(1, leastCommonMultiple(_:_:))
+    }
 }
 
 extension Comparable {

@@ -102,6 +102,8 @@
 		B93F1BB5293C12EA008D5BD1 /* Day25.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93AB244291D93160032E7E9 /* Day25.swift */; };
 		B93F1BB6293C12EA008D5BD1 /* Day25.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93AB244291D93160032E7E9 /* Day25.swift */; };
 		B93F1BB7293C12ED008D5BD1 /* Day25Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93AB246291D93160032E7E9 /* Day25Tests.swift */; };
+		B9BAA29B2B23DE22009E8CA9 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BAA29A2B23DE22009E8CA9 /* Math.swift */; };
+		B9BAA29C2B23DE22009E8CA9 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BAA29A2B23DE22009E8CA9 /* Math.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -236,6 +238,7 @@
 		B93F1B60293C0C9E008D5BD1 /* Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
 		B9584841295B716700B2A37C /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		B9584842295B7F6200B2A37C /* Secrets.example.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.example.xcconfig; sourceTree = "<group>"; };
+		B9BAA29A2B23DE22009E8CA9 /* Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -275,6 +278,7 @@
 				B92CA2482B196F8600943067 /* ElfCode.swift */,
 				B92CA2492B196F8600943067 /* Queue.swift */,
 				B92CA24A2B196F8600943067 /* Point3D.swift */,
+				B9BAA29A2B23DE22009E8CA9 /* Math.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -777,6 +781,7 @@
 				B93F1B9A293C12A5008D5BD1 /* Day16.swift in Sources */,
 				B92CA24B2B196F8600943067 /* AStar.swift in Sources */,
 				B93F1B75293C1241008D5BD1 /* Day4.swift in Sources */,
+				B9BAA29B2B23DE22009E8CA9 /* Math.swift in Sources */,
 				B93F1BA0293C12B4008D5BD1 /* Day18.swift in Sources */,
 				B93F1B7E293C1258008D5BD1 /* Day7.swift in Sources */,
 				B92CA24F2B196F8600943067 /* Point.swift in Sources */,
@@ -833,6 +838,7 @@
 				B93F1BAD293C12D1008D5BD1 /* Day22.swift in Sources */,
 				B93F1B4D293C0BD2008D5BD1 /* Day1Tests.swift in Sources */,
 				B93F1BA1293C12B5008D5BD1 /* Day18.swift in Sources */,
+				B9BAA29C2B23DE22009E8CA9 /* Math.swift in Sources */,
 				B93F1B89293C1277008D5BD1 /* Day10.swift in Sources */,
 				B92CA2542B196F8600943067 /* Queue.swift in Sources */,
 				B93F1B92293C128B008D5BD1 /* Day13.swift in Sources */,

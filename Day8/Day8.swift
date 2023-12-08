@@ -20,10 +20,18 @@ final class Day8: Day {
             maps[match.1] = (match.2, match.3)
         }
         
+        let seeds = maps.keys.filter { $0.last == "A" }
+        
+        return seeds.map { steps(from: $0, key: key, maps: maps) }
+            .leastCommonMultiple
+            .description
+    }
+    
+    func steps(from: Substring, key: String, maps: [Substring: (Substring, Substring)]) -> Int {
         var keyIndex = key.startIndex
-        var currentNode: Substring = "AAA"
+        var currentNode: Substring = from
         var steps = 0
-        while currentNode != "ZZZ" {
+        while currentNode.last != "Z" {
             let left = key[keyIndex] == "L"
             currentNode = left ? maps[currentNode]!.0 : maps[currentNode]!.1
             keyIndex = key.index(after: keyIndex)
@@ -33,6 +41,6 @@ final class Day8: Day {
             steps += 1
         }
         
-        return steps.description
+        return steps
     }
 }

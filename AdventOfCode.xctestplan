@@ -44,7 +44,7 @@
         "Day4Tests",
         "Day5Tests",
         "Day6Tests",
-        "Day8Tests",
+        "Day7Tests",
         "Day9Tests"
       ],
       "target" : {

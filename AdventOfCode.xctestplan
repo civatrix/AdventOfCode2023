@@ -45,7 +45,7 @@
         "Day5Tests",
         "Day6Tests",
         "Day7Tests",
-        "Day9Tests"
+        "Day8Tests"
       ],
       "target" : {
         "containerPath" : "container:AdventOfCode.xcodeproj",

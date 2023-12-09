@@ -17,12 +17,12 @@ final class Day9: Day {
                 report.append(report.last!.adjacentPairs().map { $0.1 - $0.0 })
             }
             
-            report[report.endIndex - 1].append(0)
+            report[report.endIndex - 1].insert(0, at: 0)
             for index in report.indices.reversed().dropFirst() {
-                report[index].append(report[index + 1].last! + report[index].last!)
+                report[index].insert(report[index].first! - report[index + 1].first!, at: 0)
             }
             
-            newValues.append(report[0].last!)
+            newValues.append(report[0].first!)
         }
         
         return newValues.sum.description

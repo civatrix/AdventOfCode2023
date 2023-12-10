@@ -54,7 +54,8 @@ final class Day10: Day {
                     start = Pipe(position: position, directions: [])
                     pipes.insert(start)
                 default:
-                    fatalError("Invalid pipe \(char)")
+                    break
+//                    fatalError("Invalid pipe \(char)")
                 }
             }
         }
@@ -67,16 +68,36 @@ final class Day10: Day {
         
         start.adjacent = pipes.filter { $0.adjacent.contains(start) }
         
-        var steps = 0
         var position = start!
         var previous = position
+        var route = Set<Point>()
         repeat {
-            steps += 1
+            route.insert(position.position)
             let newPosition = position.adjacent.filter { $0 != previous }.first!
             previous = position
             position = newPosition
         } while position != start
         
-        return (steps / 2).description
+        let xRange = route.map { $0.x }.minAndMax()!
+        let yRange = route.map { $0.y }.minAndMax()!
+                
+        var count = 0
+        for y in yRange.min + 1 ... yRange.max - 1 {
+            for x in xRange.min + 1 ... xRange.max - 1 {
+                guard !route.contains([x, y]) else { continue }
+                
+                let hits = (1 ... min(xRange.max - x, yRange.max - y)).filter { offset in
+                    let coord = Point(x: x + offset, y: y + offset)
+                    let pipe = pipes.first { $0.position == coord }
+                    return route.contains(coord) && pipe!.directions != [.left, .down] && pipe!.directions != [.up, .right]
+                }.count
+                
+                if !hits.isMultiple(of: 2) {
+                    count += 1
+                }
+            }
+        }
+        
+        return count.description
     }
 }

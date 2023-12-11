@@ -22,7 +22,7 @@
   "testTargets" : [
     {
       "skippedTests" : [
-        "Day11Tests",
+        "Day10Tests",
         "Day12Tests",
         "Day13Tests",
         "Day14Tests",

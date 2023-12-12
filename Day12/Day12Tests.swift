@@ -13,7 +13,17 @@ final class Day12Tests: XCTestCase {
     func testDay() throws {
         let input =
 """
+???.### 1,1,3
+.??..??...?##. 1,1,3
+?#?#?#?#?#?#?#? 1,3,1,6
+????.#...#... 4,1,1
+????.######..#####. 1,6,5
+?###???????? 3,2,1
 """
-        XCTAssertEqual(day.run(input: input), "")
+        XCTAssertEqual(day.run(input: input), "21")
+    }
+    
+    func testMatches() {
+        XCTAssertTrue(day.matches("#.#.###", guide: [1,1,3]))
     }
 }

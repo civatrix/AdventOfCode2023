@@ -23,7 +23,7 @@
     {
       "skippedTests" : [
         "Day10Tests",
-        "Day12Tests",
+        "Day11Tests",
         "Day13Tests",
         "Day14Tests",
         "Day15Tests",

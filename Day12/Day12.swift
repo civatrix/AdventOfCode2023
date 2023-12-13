@@ -8,54 +8,69 @@
 import Foundation
 
 final class Day12: Day {
+    struct Key: Hashable {
+        let mapIndex: String.Index
+        let guideIndex: Int
+        let blockSize: Int
+    }
+    
+    var cache = [Key: Int]()
     func run(input: String) -> String {
         return input.lines.map { line -> Int in
             let guide = line.allDigits
-            let map = line.split(separator: " ")[0]
+            let map = line.split(separator: " ")[0].appending("?")
             
-            return permutations(of: String(map), matching: guide, startingFrom: map.startIndex)
+            let finalGuide = guide + guide + guide + guide + guide
+            let finalMap = (map + map + map + map + map).dropLast(1).appending(".")
+            
+            cache = [:]
+            return permutations(of: finalMap, matching: finalGuide, startingFrom: map.startIndex, inBlock: 0, withSize: 0)
         }
         .sum
         .description
     }
     
-    func permutations(of map: String, matching guide: [Int], startingFrom: String.Index) -> Int {
-        guard matches(map, guide: guide) else {
-            return 0
+    func permutations(of map: String, matching guide: [Int], startingFrom: String.Index, inBlock: Int, withSize: Int) -> Int {
+        let key = Key(mapIndex: startingFrom, guideIndex: inBlock, blockSize: withSize)
+        if let cacheHit = cache[key] {
+            return cacheHit
+        }
+                    
+        guard startingFrom != map.endIndex else {
+            return inBlock == guide.count ? 1 : 0
         }
         
-        guard let index = map[startingFrom...].firstIndex(of: "?") else { return 1 }
-        let nextIndex = map.index(after: index)
-            
+        let nextIndex = map.index(after: startingFrom)
         var total = 0
-        total += permutations(of: map.replacingCharacters(in: index ..< nextIndex, with: "#"), matching: guide, startingFrom: nextIndex)
-        total += permutations(of: map.replacingCharacters(in: index ..< nextIndex, with: "."), matching: guide, startingFrom: nextIndex)
-        
-        return total
-    }
-    
-    func matches(_ map: String, guide: [Int]) -> Bool {
-        var currentGuide = 0
-        var length = 0
-        for character in map.trimmingCharacters(in: CharacterSet(charactersIn: ".")).appending(".") {
-            if character == "?" {
-                if length <= guide[safe: currentGuide] ?? 0 {
-                    return true
-                } else {
-                    return false
-                }
-            } else if character == "#" {
-                length += 1
-            } else if length > 0 {
-                if length == guide[safe: currentGuide] ?? 0 {
-                    currentGuide += 1
-                    length = 0
-                } else {
-                    return false
-                }
+        func handleHit() {
+            if withSize <= guide[safe: inBlock] ?? -1 {
+                total += permutations(of: map, matching: guide, startingFrom: nextIndex, inBlock: inBlock, withSize: withSize + 1)
             }
         }
         
-        return currentGuide == guide.count
+        func handleMiss() {
+            if withSize > 0 {
+                if withSize == guide[safe: inBlock] ?? -1 {
+                    total += permutations(of: map, matching: guide, startingFrom: nextIndex, inBlock: inBlock + 1, withSize: 0)
+                }
+            } else {
+                total += permutations(of: map, matching: guide, startingFrom: nextIndex, inBlock: inBlock, withSize: withSize)
+            }
+        }
+        
+        switch map[startingFrom] {
+        case "?":
+            handleHit()
+            handleMiss()
+        case ".":
+            handleMiss()
+        case "#":
+            handleHit()
+        default:
+            fatalError("Unknown character \(map[startingFrom]) in \(map)")
+        }
+        
+        cache[key] = total
+        return total
     }
 }

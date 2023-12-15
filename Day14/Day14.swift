@@ -21,41 +21,72 @@ final class Day14: Day {
             lhs.location == rhs.location
         }
         
-        init(location: Point, type: Day14.Rock.Shape) {
+        init(location: Point) {
             self.location = location
-            self.type = type
-        }
-        
-        enum Shape: Hashable {
-            case square, round
         }
         
         var location: Point
-        let type: Shape
     }
     
     func run(input: String) -> String {
         let lines = input.lines
         var rocks = Set<Rock>()
+        var roundRocks = Set<Rock>()
         for (y, line) in lines.enumerated() {
             for (x, cell) in line.enumerated() {
                 if cell == "#" {
-                    rocks.insert(Rock(location: [x, y], type: .square))
+                    rocks.insert(Rock(location: [x, y]))
                 } else if cell == "O" {
-                    rocks.insert(Rock(location: [x, y], type: .round))
+                    let rock = Rock(location: [x, y])
+                    rocks.insert(rock)
+                    roundRocks.insert(rock)
                 }
             }
         }
         
-        let southEdge = lines.count
-        var totalLoad = 0
-        for rock in rocks.sorted() where rock.type == .round {
-            let newY = rocks.filter { $0.location.x == rock.location.x && $0.location.y < rock.location.y }.map { $0.location.y }.max() ?? -1
-            rock.location = [rock.location.x, newY + 1]
+        let southBoundary = lines.count
+        let eastBoundary = lines[0].count
+        
+        var cache = [Set<Point>: Int]()
+        var index = 0
+        let target = 1_000_000_000
+        while index < target {
+            // North
+            for rock in roundRocks.sorted() {
+                let newY = rocks.filter { $0.location.x == rock.location.x && $0.location.y < rock.location.y }.map { $0.location.y }.max() ?? -1
+                rock.location = [rock.location.x, newY + 1]
+            }
             
-            totalLoad += southEdge - (newY + 1)
+            // West
+            for rock in roundRocks.sorted() {
+                let newX = rocks.filter { $0.location.y == rock.location.y && $0.location.x < rock.location.x }.map { $0.location.x }.max() ?? -1
+                rock.location = [newX + 1, rock.location.y]
+            }
+            
+            // South
+            for rock in roundRocks.sorted().reversed() {
+                let newY = rocks.filter { $0.location.x == rock.location.x && $0.location.y > rock.location.y }.map { $0.location.y }.min() ?? southBoundary
+                rock.location = [rock.location.x, newY - 1]
+            }
+            
+            // East
+            for rock in roundRocks.sorted().reversed() {
+                let newX = rocks.filter { $0.location.y == rock.location.y && $0.location.x > rock.location.x }.map { $0.location.x }.min() ?? eastBoundary
+                rock.location = [newX - 1, rock.location.y]
+            }
+            
+            let positions = Set(roundRocks.map { $0.location })
+            if let match = cache[positions] {
+                let cycle = index - match
+                index = target - ((target - match) % cycle)
+                cache = [:]
+            } else {
+                cache[positions] = index
+            }
+            index += 1
         }
         
-        return totalLoad.description
+        let southEdge = lines.count
+        return roundRocks.map { southEdge - $0.location.y }.sum.description
     }
 }

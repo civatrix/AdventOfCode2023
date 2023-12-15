@@ -24,6 +24,6 @@ O.#..O.#.#
 #....###..
 #OO..#....
 """
-        XCTAssertEqual(day.run(input: input), "136")
+        XCTAssertEqual(day.run(input: input), "64")
     }
 }

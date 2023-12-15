@@ -101,7 +101,7 @@ public struct Point: Hashable, CustomStringConvertible, Comparable, Equatable, E
     }
 }
 
-extension Set where Element == Point {
+extension Collection where Element == Point {
     func printPoints(current: Point? = nil, path: [Point] = []) {
         var string = ""
         let xRange = map { $0.x }.minAndMax()!
@@ -124,7 +124,9 @@ extension Set where Element == Point {
         
         print(string)
     }
-    
+}
+ 
+extension Set where Element == Point {
     func removeDeadEnds(keeping: Set<Point>, warps: [Point: Point]) -> Set<Point> {
         var mutable = self
         while true {

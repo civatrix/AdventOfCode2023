@@ -61,7 +61,20 @@ final class Day16: Day {
         let maxX = lines[0].count
         let maxY = lines.count
         
-        var beams = [Beam(location: .zero - .right, direction: .right)]
+        var bestTotal = 0
+        for y in 0 ..< maxY {
+            bestTotal = max(bestTotal, test(start: Beam(location: [-1, y], direction: .right), in: mirrors, maxX: maxX, maxY: maxY))
+            bestTotal = max(bestTotal, test(start: Beam(location: [maxX, y], direction: .left), in: mirrors, maxX: maxX, maxY: maxY))
+        }
+        for x in 0 ..< maxX {
+            bestTotal = max(bestTotal, test(start: Beam(location: [x, -1], direction: .down), in: mirrors, maxX: maxX, maxY: maxY))
+            bestTotal = max(bestTotal, test(start: Beam(location: [x, maxY], direction: .up), in: mirrors, maxX: maxX, maxY: maxY))
+        }
+        return bestTotal.description
+    }
+    
+    func test(start: Beam, in mirrors: [Point: Character], maxX: Int, maxY: Int) -> Int {
+        var beams = [start.copy()]
         var energized = Set<Beam>()
         var previousEnergized = -1
         while energized.count != previousEnergized {
@@ -131,7 +144,7 @@ final class Day16: Day {
             }
         }
         
-        energized.remove(Beam(location: .zero - .right, direction: .right))
-        return Set(energized.map { $0.location }).count.description
+        energized.remove(start)
+        return Set(energized.map { $0.location }).count
     }
 }

@@ -13,21 +13,24 @@ final class Day18: Day {
         var corners = [current]
         var perimeter = 0
         
-        for line in input.lines {
-            let directionString = line.first!
-            let direction: Point = switch directionString {
-            case "R": .right
-            case "L": .left
-            case "U": .up
-            case "D": .down
-            default:
-                fatalError("Invalid direction \(directionString)")
+        input.lines
+            .forEach { line in
+                let hex = line.split(separator: "#").last!.dropLast()
+                let directionString = hex.last!
+                let direction: Point = switch directionString {
+                case "0": .right
+                case "2": .left
+                case "3": .up
+                case "1": .down
+                default:
+                    fatalError("Invalid direction \(directionString)")
+                }
+                
+                let distance = Int(hex.prefix(5), radix: 16)!
+                perimeter += distance
+                current += (direction * distance)
+                corners.append(current)
             }
-            let distance = line.allDigits[0]
-            perimeter += distance
-            current += (direction * distance)
-            corners.append(current)
-        }
         
         var area = 0
         for (p1, p2) in corners.adjacentPairs() {

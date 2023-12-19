@@ -28,6 +28,6 @@ U 3 (#a77fa3)
 L 2 (#015232)
 U 2 (#7a21e3)
 """
-        XCTAssertEqual(day.run(input: input), "62")
+        XCTAssertEqual(day.run(input: input), "952408144115")
     }
 }

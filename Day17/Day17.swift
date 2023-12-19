@@ -40,7 +40,7 @@ final class Day17: Day {
             guard current.totalCost < best else { continue }
             
             for nextDirection in [current.direction.rotate(clockwise: true), current.direction.rotate(clockwise: false)] {
-                for offset in (1 ... 3) {
+                for offset in (4 ... 10) {
                     let cost = (1 ... offset).compactMap { (current.position + (nextDirection * $0)).value(in: grid) }
                     guard cost.count == offset else { continue }
                     let nextNode = HeatNode(position: current.position + (nextDirection * offset), direction: nextDirection, totalCost: current.totalCost + cost.sum)

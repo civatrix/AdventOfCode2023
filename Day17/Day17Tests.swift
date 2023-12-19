@@ -27,6 +27,6 @@ final class Day17Tests: XCTestCase {
 2546548887735
 4322674655533
 """
-        XCTAssertEqual(day.run(input: input), "102")
+        XCTAssertEqual(day.run(input: input), "94")
     }
 }

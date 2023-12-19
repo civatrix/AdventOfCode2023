@@ -21,6 +21,14 @@ extension StringProtocol {
         let characterSet = CharacterSet(charactersIn: "-0123456789")
         return components(separatedBy: characterSet.inverted).filter { !$0.isEmpty }.compactMap { Int($0) }
     }
+    
+    func bifurcate(on: String) -> (String, String) {
+        let components = split(separator: on)
+        guard components.count == 2 else {
+            fatalError("Failed to bifurcate \(self) on \(on). Got \(components)")
+        }
+        return (String(components[0]), String(components[1]))
+    }
 }
 
 extension Collection where Index == Int {

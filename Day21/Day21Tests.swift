@@ -13,7 +13,19 @@ final class Day21Tests: XCTestCase {
     func testDay() throws {
         let input =
 """
+...........
+.....###.#.
+.###.##..#.
+..#.#...#..
+....#.#....
+.##..S####.
+.##..#...#.
+.......##..
+.##.#.####.
+.##..##.##.
+...........
 """
-        XCTAssertEqual(day.run(input: input), "")
+        day.numberOfSteps = 6
+        XCTAssertEqual(day.run(input: input), "16")
     }
 }

@@ -13,7 +13,24 @@ final class Day20Tests: XCTestCase {
     func testDay() throws {
         let input =
 """
+broadcaster -> a, b, c
+%a -> b
+%b -> c
+%c -> inv
+&inv -> a
 """
-        XCTAssertEqual(day.run(input: input), "")
+        XCTAssertEqual(day.run(input: input), "32000000")
+    }
+    
+    func testDay2() throws {
+        let input =
+"""
+broadcaster -> a
+%a -> inv, con
+&inv -> b
+%b -> con
+&con -> output
+"""
+        XCTAssertEqual(day.run(input: input), "11687500")
     }
 }

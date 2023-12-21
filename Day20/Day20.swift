@@ -88,20 +88,24 @@ final class Day20: Day {
             }
         }
         
-        var high = 0
-        var low = 0
-        for _ in 0 ..< 1000 {
+        let targets: Set<String> = ["ln", "zx", "vn", "dr"]
+        var multiples = [Int]()
+        for buttonPress in 1 ..< .max {
             var pulses = ArraySlice(broadcastPulses)
-            low += broadcastPulses.count + 1
             while let pulse = pulses.popFirst() {
+                if targets.contains(pulse.destination) && pulse.state == .low {
+                    multiples.append(buttonPress)
+                    
+                    if multiples.count == targets.count {
+                        return multiples.leastCommonMultiple.description
+                    }
+                }
                 guard var module = modules[pulse.destination] else { continue }
-                let newPulses = module.apply(pulse: pulse)
-                high += newPulses.filter { $0.state == .high }.count
-                low += newPulses.filter { $0.state == .low }.count
-                pulses.append(contentsOf: newPulses)
+                pulses.append(contentsOf: module.apply(pulse: pulse))
                 modules[pulse.destination] = module
             }
         }
-        return (high * low).description
+        
+        return "Not found"
     }
 }

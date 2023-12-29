@@ -13,10 +13,10 @@ struct Point3D: Hashable, CustomStringConvertible, Comparable, Equatable, Expres
     static let zero: Point3D = [0, 0, 0]
     static let left: Point3D = [-1, 0, 0]
     static let right: Point3D = [1, 0, 0]
-    static let up: Point3D = [0, -1, 0]
-    static let down: Point3D = [0, 1, 0]
-    static let towards: Point3D = [0, 0, -1]
-    static let away: Point3D = [0, 0, 1]
+    static let towards: Point3D = [0, -1, 0]
+    static let away: Point3D = [0, 1, 0]
+    static let down: Point3D = [0, 0, -1]
+    static let up: Point3D = [0, 0, 1]
     
     static let adjacentDirections: [Point3D] = [.up, .left, .down, .right, .towards, .away]
     

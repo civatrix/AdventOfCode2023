@@ -66,7 +66,7 @@ struct HexGraph: Graph {
     }
 }
 
-public final class AStar<G: Graph> {
+final class AStar<G: Graph> {
     /// The graph to search on.
     public let graph: G
     
@@ -168,7 +168,7 @@ public final class AStar<G: Graph> {
     }
 }
 
-private struct Node<V: Hashable>: Hashable, Comparable {
+struct Node<V: Hashable>: Hashable, Comparable {
     /// The graph vertex.
     var vertex: V
     
